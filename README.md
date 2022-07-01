@@ -1,6 +1,13 @@
 # Bachelor Thesis related Program
-- Socket-Client connection
-- Command Line Interface (CLI)
-    - Scan for devices
-    - Configure system
-    - Ranging
+- Host PC
+    - Socket-Client connection
+    - Command Line Interface (CLI)
+        - Scan for devices
+        - Configure system
+        - Ranging
+- Remote PC
+    - Read Data
+    - Static TF
+    - Visualization
+    - Rviz
+- Move command script
