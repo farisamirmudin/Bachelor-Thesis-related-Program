@@ -116,7 +116,7 @@ class System:
         numAnchor = int(input('Number of Anchor: '))
         print('Available Devices: ' + ', '.join(self.dev))
         ids = [int(x) for x in input('MA,SA1..SAx,TAG: ').strip().split('')]
-        CONF = "$PK,{0},{1},{2},".format(self.dev[ids[0]], numAnchor, numTag)
+        CONF = "$PK,{0},{1},{2},".format(self.dev[ids[0]], numAnchor-1, numTag)
         for id in ids[1:]:
             CONF = CONF + "{0},".format(self.dev[id])
         CONF = CONF + '\r\n'
