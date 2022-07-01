@@ -71,7 +71,16 @@ def solve(point, distance):
     return np.array([pos.x, pos.y])
 
 def trilateration(points, distances):
-    
+    with open('abc_param.txt', 'r') as f:
+        lines = f.readlines()
+
+    for line in lines:
+        if 'a' in line:
+            a=float(line[4:])
+        if 'b' in line:
+            b=float(line[4:])
+        if 'c' in line:
+            c=float(line[4:])
     p1,p2,p3,p4 = np.array(points)
     r1,r2,r3,r4 = np.array(distances)
     e_x=(p2-p1)/np.linalg.norm(p2-p1)
@@ -86,7 +95,8 @@ def trilateration(points, distances):
     z2=-z1
     ans1=p1+(x*e_x)+(y*e_y)+(z1*e_z)
     ans2=p1+(x*e_x)+(y*e_y)+(z2*e_z)
-    # multp_z = lambda x:a*x**2+b*x+c
+    multp_z = lambda x:a*x**2+b*x+c
+    ans1[2] = multp_z(ans1[2])
     return ans1
     # dist1=np.linalg.norm(p4-ans1)
     # dist2=np.linalg.norm(p4-ans2)
@@ -95,20 +105,7 @@ def trilateration(points, distances):
     # else:
     #     return ans2
 
-if __name__ == '__main__':
-    with open('abc_param.txt', 'r') as f:
-        lines = f.readlines()
-
-    for line in lines:
-        if 'a' in line:
-            a=float(line[4:])
-        if 'b' in line:
-            b=float(line[4:])
-        if 'c' in line:
-            c=float(line[4:])
     
-    print(a)
-    print(b)
-    print(c)
+    
 
 
