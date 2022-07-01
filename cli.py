@@ -6,6 +6,7 @@ from kalmanfilter import *
 from threading import Thread
 import matplotlib.pyplot as plt
 from datetime import datetime
+from pathlib import Path
 
 import platform
 if platform.system() == 'Windows':
@@ -15,6 +16,8 @@ elif platform.system() == 'Linux':
 elif platform.system() == 'Darwin':
     port = "/dev/tty.usbserial-0001"
 
+home = str(Path.home())
+
 STOPSCAN = '$PW,0,\r\n' # Stop scanning for devices
 STARTSCAN = '$PW,1,\r\n' # Start scan
 DELCONF = '$PL,\r\n'  # Delete configuration
@@ -23,17 +26,18 @@ STOPRANGE = '$PG,\r\n' # Stop Ranging
 CONF = '$PK,' # Check configuration
 
 class System:
-    def __init__(self, kf, anchors):
+    def __init__(self, dim, kf, anchors):
         self.conn = Serial(port, baudrate = 512000, bytesize = 8, stopbits = 1)
         self.anchors = anchors
         self.kf = kf
+        self.dim = dim
         self.zs, self.xs = [], []
         now = datetime.now().strftime("%H-%M-%S")
-        self.test_path = f'/Users/faris/Documents/bachelorarbeit/test/3D-positioning/8Jun/{now}'
+        self.test_path = '{0}\\position_estimation\\'.format(home)
         os.makedirs(self.test_path)
-        self.file = open(f"{self.test_path}/measurement.txt", 'w')
         os.chdir(self.test_path)
-
+        self.file = open("measurement.txt", 'w+')
+        
     def reset(self):
         conn = self.conn
         conn.write(DELCONF.encode())
@@ -47,8 +51,9 @@ class System:
         self.reset_input(0.05)
         while scan:
             resp = conn.readline().decode('utf-8').split(',')
-            if '0' not in resp[2:7] and len(resp) == 11:
-                self.dev = resp[2:7]
+            tmp = resp[2:7] if self.dim == 3 else resp[2:6]
+            if '0' not in tmp and len(resp) == 11:
+                self.dev = tmp
                 scan = False
         conn.write(STOPSCAN.encode())
 
@@ -61,36 +66,42 @@ class System:
         file = self.file
         conn = self.conn
         initial = True
-        m, b = error_check()
-        # err = lambda x:x-(m*x+b)
-        err = lambda x:x-25
+        with open('mc_param.txt', 'r') as f:
+            lines = f.readlines()
+
+        for line in lines:
+            if 'm' in line:
+                m=float(line[4:])
+            if 'c' in line:
+                c=float(line[4:])
+
+        err = lambda x:m*x+c
         conn.write(STARTRANGE.encode())
         self.reset_input(0.05)
         try:
             self.t1 = time.perf_counter()
             while 1:
                 resp = conn.readline().decode('utf-8').split(',')
-                if len(resp)==8 and '0' not in resp[2:6]:
-                    distance = [err(int(x, 16)) for x in resp[2:6]]
-                    pose = trilaterate2D(self.anchors, distance)
+                tmp = resp[2:6] if self.dim == 3 else resp[2:5]
+                if len(resp)==8 and '0' not in tmp:
+                    distance = [err(int(x, 16)) for x in tmp]
+                    pose = trilateration(self.anchors, distance)
                     if initial:
-                        kf.x[0] = pose[0]
-                        kf.x[1] = pose[1]
+                        kf.x = pose
                     self.zs.append(pose)
                     kf.predict_update(pose)
                     self.xs.append(kf.x)
                     print("position = ", [np.round(x,2) for x in kf.x])
 
                     # Write data to file
+                    file.write(f"raw position = {pose}\n")
                     file.write(f"distance = {distance}\n")
                     file.write(f"position = {kf.x}\n")
 
-                    # Sends data to client etc. Raspberry pi
+                    # Sends data to client
                     try:
-                        # msg = pickle.dumps(self.anchors)
-                        # clientsocket.send(msg)
                         msg = pickle.dumps(kf.x)
-                        clientsocket.send(msg)
+                        client.send(msg)
                     except:
                         pass
                     initial = False
@@ -101,12 +112,14 @@ class System:
             self.save_results()
 
     def configure(self):
-        # CONF = "$PK,%s,%d,1," % (dev[idx[0]], len(dev)-2)
-        # for i in idx[1:]:
-        #     CONF = CONF + "%s," % dev[i]
-        # CONF = CONF + '\r\n'
-        CONF = "$PK,E1D0,3,1,E1C6,E1A7,E1D4,E1CC,\r\n"
-        # CONF = "$PK,E1D0,2,1,E1C6,E1A7,E1CC,\r\n"
+        numTag = int(input('Number of Tag: '))
+        numAnchor = int(input('Number of Anchor: '))
+        print('Available Devices: ' + ', '.join(self.dev))
+        ids = [int(x) for x in input('MA,SA1..SAx,TAG: ').strip().split('')]
+        CONF = "$PK,{0},{1},{2},".format(self.dev[ids[0]], numAnchor, numTag)
+        for id in ids[1:]:
+            CONF = CONF + "{0},".format(self.dev[id])
+        CONF = CONF + '\r\n'
         self.conn.write(CONF.encode())
 
     def save_results(self):
@@ -125,41 +138,35 @@ class System:
             plt.plot(zs[:,i], 'b.')
             plt.plot(xs[:,i], 'r--')
             plt.title(idx[i])
-            plt.savefig(f'{self.test_path}/{idx[i]}')
+            plt.savefig('position.png')
         file.close()
 
 def checking_client():
-    global clientsocket
+    global client
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind(('192.168.1.49', 9000))
     s.listen(10)
     while 1:
-        clientsocket, address = s.accept()
+        client, address = s.accept()
         print(f"Connection from {address} has been established.")
 
 def main():
-    # anchors = [[0,0,0],[80,0,0],[70,160,0],[-5,140,40]]
-    # anchors = [[0,0,0],[114,0,0],[114,80,0],[0,80,0]]
-    # anchors = [[0,178,0],[300,80,0],[0,500,0],[300,500,110.5]]
-    anchors = [[0,178,0],[300,110,0],[0,500,0],[300,465,82]]
-    # anchors = [[0,178,72],[300,110,72],[0,500,72],[300,465,82]] 
-    # anchors = [[0,178,72],[300,110,72],[0,500,72]] # 2d
+    dim = int(input('Dimension # 3 for 3D and 2 for 2D: '))
+    anchors = []
+    for i in range(dim+1):
+        tmp = [float(x) for x in input('Coordinate {0} # values separated by comma -> x,y,z: '.format(i+1)).strip().split(',')]
+        anchors.append(tmp)
 
-    kf = KalmanFilter(dim=3)
+    kf = KalmanFilter(dim=dim)
     kf.R *= 100.
-    kf.Q = np.diag([1.5, 1.5, 0.05])
-    kf.P *= 50.
-    # kf = KalmanFilter(dim=2)
-    # kf.R *= 100.
-    # kf.Q = np.diag([1.5, 1.5])
-    # kf.P *= 50.
-    
+    kf.Q = np.diag([1.5, 1.5, 0.05]) if dim == 3 else np.diag([1.5, 1.5])
+    kf.P *= 50.    
 
     t1 = Thread(target=checking_client)
     t1.daemon = True
     t1.start()
 
-    uwb = System(kf, anchors)
+    uwb = System(dim, kf, anchors)
     uwb.reset()
     uwb.scan()
     uwb.configure()
