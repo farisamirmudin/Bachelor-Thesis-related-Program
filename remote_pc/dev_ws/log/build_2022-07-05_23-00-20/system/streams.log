@@ -1,0 +1,29 @@
+[0.739s] Invoking command in '/home/faris/dev_ws/build/system': PYTHONPATH=/home/faris/dev_ws/install/system/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /home/faris/dev_ws/install/system --editable --build-directory /home/faris/dev_ws/build/system/build --no-deps install_data --install-dir /home/faris/dev_ws/install/system
+[0.999s] running develop
+[1.148s] running egg_info
+[1.149s] creating system.egg-info
+[1.149s] writing system.egg-info/PKG-INFO
+[1.149s] writing dependency_links to system.egg-info/dependency_links.txt
+[1.149s] writing entry points to system.egg-info/entry_points.txt
+[1.149s] writing requirements to system.egg-info/requires.txt
+[1.149s] writing top-level names to system.egg-info/top_level.txt
+[1.151s] writing manifest file 'system.egg-info/SOURCES.txt'
+[1.193s] reading manifest file 'system.egg-info/SOURCES.txt'
+[1.194s] writing manifest file 'system.egg-info/SOURCES.txt'
+[1.236s] running build_ext
+[1.242s] Creating /home/faris/dev_ws/install/system/lib/python3.8/site-packages/site.py
+[1.244s] Creating /home/faris/dev_ws/install/system/lib/python3.8/site-packages/system.egg-link (link to .)
+[1.245s] Installing anchor script to /home/faris/dev_ws/install/system/lib/system
+[1.245s] Installing read_data script to /home/faris/dev_ws/install/system/lib/system
+[1.246s] Installing static_tf script to /home/faris/dev_ws/install/system/lib/system
+[1.246s] Installing visualize script to /home/faris/dev_ws/install/system/lib/system
+[1.246s] 
+[1.246s] Installed /home/faris/dev_ws/build/system
+[1.247s] running install_data
+[1.247s] creating /home/faris/dev_ws/install/system/share/ament_index
+[1.247s] creating /home/faris/dev_ws/install/system/share/ament_index/resource_index
+[1.247s] creating /home/faris/dev_ws/install/system/share/ament_index/resource_index/packages
+[1.247s] copying resource/system -> /home/faris/dev_ws/install/system/share/ament_index/resource_index/packages
+[1.247s] copying package.xml -> /home/faris/dev_ws/install/system/share/system
+[1.247s] creating /home/faris/dev_ws/install/system/share/system/launch
+[1.279s] Invoked command in '/home/faris/dev_ws/build/system' returned '0': PYTHONPATH=/home/faris/dev_ws/install/system/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /home/faris/dev_ws/install/system --editable --build-directory /home/faris/dev_ws/build/system/build --no-deps install_data --install-dir /home/faris/dev_ws/install/system

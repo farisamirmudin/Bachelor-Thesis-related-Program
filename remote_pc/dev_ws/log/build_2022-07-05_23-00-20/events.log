@@ -1,0 +1,44 @@
+[0.000000] (-) TimerEvent: {}
+[0.000399] (system) JobQueued: {'identifier': 'system', 'dependencies': OrderedDict()}
+[0.001754] (system) JobStarted: {'identifier': 'system'}
+[0.156195] (-) TimerEvent: {}
+[0.284242] (-) TimerEvent: {}
+[0.398807] (-) TimerEvent: {}
+[0.503972] (-) TimerEvent: {}
+[0.604340] (-) TimerEvent: {}
+[0.704959] (-) TimerEvent: {}
+[0.736216] (system) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'develop', '--prefix', '/home/faris/dev_ws/install/system', '--editable', '--build-directory', '/home/faris/dev_ws/build/system/build', '--no-deps', 'install_data', '--install-dir', '/home/faris/dev_ws/install/system'], 'cwd': '/home/faris/dev_ws/build/system', 'env': {'GJS_DEBUG_TOPICS': 'JS ERROR;JS LOG', 'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'faris', 'SSH_AGENT_PID': '1839', 'XDG_SESSION_TYPE': 'x11', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/galactic/opt/yaml_cpp_vendor/lib:/opt/ros/galactic/opt/rviz_ogre_vendor/lib:/opt/ros/galactic/lib/x86_64-linux-gnu:/opt/ros/galactic/lib', 'HOME': '/home/faris', 'OLDPWD': '/home/faris', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'MANAGERPID': '1660', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'IM_CONFIG_PHASE': '1', 'ROS_DISTRO': 'galactic', 'LOGNAME': 'faris', 'JOURNAL_STREAM': '8:40945', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'faris', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ROS_LOCALHOST_ONLY': '0', 'WINDOWPATH': '2', 'PATH': '/opt/ros/galactic/bin:/home/faris/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'SESSION_MANAGER': 'local/ubuntu:@/tmp/.ICE-unix/1876,unix/ubuntu:/tmp/.ICE-unix/1876', 'INVOCATION_ID': '8b18a6eafd784891ba55c965aab49fcd', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/06757c86_b4ac_41ea_a54e_b5877c24079f', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'GNOME_TERMINAL_SERVICE': ':1.472', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'ROS_DOMAIN_ID': '100', 'AMENT_PREFIX_PATH': '/opt/ros/galactic', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'GPG_AGENT_INFO': '/run/user/1000/gnupg/S.gpg-agent:0:1', 'GJS_DEBUG_OUTPUT': 'stderr', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/faris/dev_ws/build/system', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/faris/dev_ws/install/system/lib/python3.8/site-packages:/opt/ros/galactic/lib/python3.8/site-packages', 'COLCON': '1', 'VTE_VERSION': '6003'}, 'shell': False}
+[0.824576] (-) TimerEvent: {}
+[0.926466] (-) TimerEvent: {}
+[1.001064] (system) StdoutLine: {'line': b'running develop\n'}
+[1.141287] (-) TimerEvent: {}
+[1.150073] (system) StdoutLine: {'line': b'running egg_info\n'}
+[1.150289] (system) StdoutLine: {'line': b'creating system.egg-info\n'}
+[1.150415] (system) StdoutLine: {'line': b'writing system.egg-info/PKG-INFO\n'}
+[1.150547] (system) StdoutLine: {'line': b'writing dependency_links to system.egg-info/dependency_links.txt\n'}
+[1.150706] (system) StdoutLine: {'line': b'writing entry points to system.egg-info/entry_points.txt\n'}
+[1.150891] (system) StdoutLine: {'line': b'writing requirements to system.egg-info/requires.txt\n'}
+[1.150976] (system) StdoutLine: {'line': b'writing top-level names to system.egg-info/top_level.txt\n'}
+[1.152337] (system) StdoutLine: {'line': b"writing manifest file 'system.egg-info/SOURCES.txt'\n"}
+[1.194640] (system) StdoutLine: {'line': b"reading manifest file 'system.egg-info/SOURCES.txt'\n"}
+[1.195326] (system) StdoutLine: {'line': b"writing manifest file 'system.egg-info/SOURCES.txt'\n"}
+[1.238045] (system) StdoutLine: {'line': b'running build_ext\n'}
+[1.241733] (-) TimerEvent: {}
+[1.243280] (system) StdoutLine: {'line': b'Creating /home/faris/dev_ws/install/system/lib/python3.8/site-packages/site.py\n'}
+[1.246001] (system) StdoutLine: {'line': b'Creating /home/faris/dev_ws/install/system/lib/python3.8/site-packages/system.egg-link (link to .)\n'}
+[1.246870] (system) StdoutLine: {'line': b'Installing anchor script to /home/faris/dev_ws/install/system/lib/system\n'}
+[1.247057] (system) StdoutLine: {'line': b'Installing read_data script to /home/faris/dev_ws/install/system/lib/system\n'}
+[1.247403] (system) StdoutLine: {'line': b'Installing static_tf script to /home/faris/dev_ws/install/system/lib/system\n'}
+[1.247701] (system) StdoutLine: {'line': b'Installing visualize script to /home/faris/dev_ws/install/system/lib/system\n'}
+[1.247851] (system) StdoutLine: {'line': b'\n'}
+[1.248094] (system) StdoutLine: {'line': b'Installed /home/faris/dev_ws/build/system\n'}
+[1.248223] (system) StdoutLine: {'line': b'running install_data\n'}
+[1.248363] (system) StdoutLine: {'line': b'creating /home/faris/dev_ws/install/system/share/ament_index\n'}
+[1.248572] (system) StdoutLine: {'line': b'creating /home/faris/dev_ws/install/system/share/ament_index/resource_index\n'}
+[1.248678] (system) StdoutLine: {'line': b'creating /home/faris/dev_ws/install/system/share/ament_index/resource_index/packages\n'}
+[1.248773] (system) StdoutLine: {'line': b'copying resource/system -> /home/faris/dev_ws/install/system/share/ament_index/resource_index/packages\n'}
+[1.248873] (system) StdoutLine: {'line': b'copying package.xml -> /home/faris/dev_ws/install/system/share/system\n'}
+[1.248969] (system) StdoutLine: {'line': b'creating /home/faris/dev_ws/install/system/share/system/launch\n'}
+[1.280617] (system) CommandEnded: {'returncode': 0}
+[1.298735] (system) JobEnded: {'identifier': 'system', 'rc': 0}
+[1.301699] (-) EventReactorShutdown: {}

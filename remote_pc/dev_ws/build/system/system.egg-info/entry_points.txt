@@ -1,0 +1,6 @@
+[console_scripts]
+anchor = system.anchor:main
+read_data = system.read_data:main
+static_tf = system.static_tf:main
+visualize = system.visualize:main
+

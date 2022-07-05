@@ -1,6 +1,5 @@
 import rclpy
 from rclpy.node import Node
-from rclpy.duration import Duration
 from geometry_msgs.msg import Point, Pose
 from visualization_msgs.msg import Marker
 
@@ -8,7 +7,7 @@ class visualize(Node):
     def __init__(self):
         super().__init__('visualization_node')
         self.pub = self.create_publisher(Marker, 'visualization_marker', 10)
-        self.init_anchor()
+        # self.init_anchor()
         self.init_marker()
         self.i = 0
         self.create_subscription(Pose, '/tag/pose', self.handle_tag_pose, 10)
@@ -24,33 +23,33 @@ class visualize(Node):
         self.line_strip.type = Marker.LINE_STRIP
         self.sphere_list.action = self.line_strip.action = Marker.ADD
 
-    def init_anchor(self):
-        self.anchor = Marker()
-        self.anchor.header.frame_id = '/map'
-        self.anchor.header.stamp = self.get_clock().now().to_msg()
-        self.anchor.ns = "anchors"
-        self.anchor.id = 0
-        self.anchor.type = Marker.CUBE_LIST
-        self.anchor.action = Marker.ADD
-        height = 10.
-        self.anchor.scale.x = 20.
-        self.anchor.scale.y = 20.
-        self.anchor.scale.z = height
-        self.anchor.color.r = 1.
-        self.anchor.color.a = 1.
+    # def init_anchor(self):
+    #     self.anchor = Marker()
+    #     self.anchor.header.frame_id = '/map'
+    #     self.anchor.header.stamp = self.get_clock().now().to_msg()
+    #     self.anchor.ns = "anchors"
+    #     self.anchor.id = 0
+    #     self.anchor.type = Marker.CUBE_LIST
+    #     self.anchor.action = Marker.ADD
+    #     height = 10.
+    #     self.anchor.scale.x = 20.
+    #     self.anchor.scale.y = 20.
+    #     self.anchor.scale.z = height
+    #     self.anchor.color.r = 1.
+    #     self.anchor.color.a = 1.
 
-        dim = int(input('Dimension # 3 for 3D and 2 for 2D: '))
-        points = []
-        for i in range(dim+1):
-            tmp = [float(x) for x in input('Coordinate {0} # values separated by comma -> x,y,z: '.format(i+1)).strip().split(',')]
-            points.append(tmp)
+    #     dim = int(input('Dimension # 3 for 3D and 2 for 2D: '))
+    #     points = []
+    #     for i in range(dim+1):
+    #         tmp = [float(x) for x in input('Coordinate {0} # values separated by comma -> x,y,z: '.format(i+1)).strip().split(',')]
+    #         points.append(tmp)
 
-        for point in points:
-            A = Point()
-            A.x = point[0]
-            A.y = point[1]
-            A.z = point[2]+height/2
-            self.anchor.points.append(A)
+    #     for point in points:
+    #         A = Point()
+    #         A.x = point[0]
+    #         A.y = point[1]
+    #         A.z = point[2]+height/2
+    #         self.anchor.points.append(A)
 
     def handle_tag_pose(self, data):
         self.sphere_list.header.stamp = self.line_strip.header.stamp = self.get_clock().now().to_msg()
@@ -75,7 +74,7 @@ class visualize(Node):
             
         self.sphere_list.points.append(my_point)
         self.line_strip.points.append(my_point)
-        self.pub.publish(self.anchor)
+        # self.pub.publish(self.anchor)
         # self.pub.publish(self.sphere_list)
         self.pub.publish(self.line_strip)
         

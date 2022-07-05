@@ -1,0 +1,27 @@
+[0.733s] Invoking command in '/home/faris/dev_ws/build/system': PYTHONPATH=/home/faris/dev_ws/install/system/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /home/faris/dev_ws/install/system --uninstall --editable --build-directory /home/faris/dev_ws/build/system/build
+[0.996s] running develop
+[1.177s] Invoked command in '/home/faris/dev_ws/build/system' returned '0': PYTHONPATH=/home/faris/dev_ws/install/system/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /home/faris/dev_ws/install/system --uninstall --editable --build-directory /home/faris/dev_ws/build/system/build
+[1.178s] Invoking command in '/home/faris/dev_ws/src/system': PYTHONPATH=/home/faris/dev_ws/install/system/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/system build --build-base /home/faris/dev_ws/build/system/build install --prefix /home/faris/dev_ws/install/system --record /home/faris/dev_ws/build/system/install.log --single-version-externally-managed
+[1.419s] running egg_info
+[1.420s] writing ../../build/system/system.egg-info/PKG-INFO
+[1.420s] writing dependency_links to ../../build/system/system.egg-info/dependency_links.txt
+[1.421s] writing entry points to ../../build/system/system.egg-info/entry_points.txt
+[1.422s] writing requirements to ../../build/system/system.egg-info/requires.txt
+[1.422s] writing top-level names to ../../build/system/system.egg-info/top_level.txt
+[1.469s] reading manifest file '../../build/system/system.egg-info/SOURCES.txt'
+[1.470s] writing manifest file '../../build/system/system.egg-info/SOURCES.txt'
+[1.471s] running build
+[1.471s] running build_py
+[1.471s] running install
+[1.472s] running install_lib
+[1.474s] running install_data
+[1.474s] running install_egg_info
+[1.476s] removing '/home/faris/dev_ws/install/system/lib/python3.8/site-packages/system-0.1.0-py3.8.egg-info' (and everything under it)
+[1.476s] Copying ../../build/system/system.egg-info to /home/faris/dev_ws/install/system/lib/python3.8/site-packages/system-0.1.0-py3.8.egg-info
+[1.477s] running install_scripts
+[1.496s] Installing anchor script to /home/faris/dev_ws/install/system/lib/system
+[1.496s] Installing read_data script to /home/faris/dev_ws/install/system/lib/system
+[1.497s] Installing static_tf script to /home/faris/dev_ws/install/system/lib/system
+[1.497s] Installing visualize script to /home/faris/dev_ws/install/system/lib/system
+[1.497s] writing list of installed files to '/home/faris/dev_ws/build/system/install.log'
+[1.521s] Invoked command in '/home/faris/dev_ws/src/system' returned '0': PYTHONPATH=/home/faris/dev_ws/install/system/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/system build --build-base /home/faris/dev_ws/build/system/build install --prefix /home/faris/dev_ws/install/system --record /home/faris/dev_ws/build/system/install.log --single-version-externally-managed

@@ -1,0 +1,18 @@
+running develop
+running egg_info
+writing system.egg-info/PKG-INFO
+writing dependency_links to system.egg-info/dependency_links.txt
+writing entry points to system.egg-info/entry_points.txt
+writing requirements to system.egg-info/requires.txt
+writing top-level names to system.egg-info/top_level.txt
+reading manifest file 'system.egg-info/SOURCES.txt'
+writing manifest file 'system.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/faris/dev_ws/install/system/lib/python3.8/site-packages/system.egg-link (link to .)
+Installing anchor script to /home/faris/dev_ws/install/system/lib/system
+Installing read_data script to /home/faris/dev_ws/install/system/lib/system
+Installing static_tf script to /home/faris/dev_ws/install/system/lib/system
+Installing visualize script to /home/faris/dev_ws/install/system/lib/system
+
+Installed /home/faris/dev_ws/build/system
+running install_data

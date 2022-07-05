@@ -23,8 +23,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-                'read_tag = system.read_tag:main',
-                # 'read_anch = system.read_anch:main',
+                'anchor = system.anchor:main',
+                'read_data = system.read_data:main',
                 'static_tf = system.static_tf:main',
                 'visualize = system.visualize:main',
         ],
