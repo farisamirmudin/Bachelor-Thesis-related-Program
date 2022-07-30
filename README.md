@@ -1,6 +1,6 @@
 # Bachelor Thesis related Program
 - Host PC
-    - Socket-Client connection
+    - Socket Server-Client connection
     - Command Line Interface (CLI)
         - Scan for devices
         - Configure system
