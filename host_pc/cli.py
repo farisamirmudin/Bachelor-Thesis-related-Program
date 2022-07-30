@@ -16,8 +16,6 @@ elif platform.system() == 'Linux':
 elif platform.system() == 'Darwin':
     port = "/dev/tty.usbserial-0001"
 
-home = str(Path.home())
-
 STOPSCAN = '$PW,0,\r\n' # Stop scanning for devices
 STARTSCAN = '$PW,1,\r\n' # Start scan
 DELCONF = '$PL,\r\n'  # Delete configuration
@@ -32,11 +30,9 @@ class System:
         self.kf = kf
         self.dim = dim
         self.zs, self.xs = [], []
-        now = datetime.now().strftime("%H-%M-%S")
-        self.test_path = '{0}\\position_estimation\\'.format(home)
-        os.makedirs(self.test_path)
-        os.chdir(self.test_path)
-        self.file = open("measurement.txt", 'w+')
+        self.now = datetime.now().strftime(f"%d-%m-%y %H-%M-%S")
+        os.mkdir(self.now)
+        self.file = open(f"{self.now}/measurement.txt", 'w+')
         
     def reset(self):
         conn = self.conn
@@ -50,12 +46,34 @@ class System:
         scan = True
         self.reset_input(0.05)
         while scan:
+            # print('scan')
             resp = conn.readline().decode('utf-8').split(',')
+            # print(resp)
             tmp = resp[2:7] if self.dim == 3 else resp[2:6]
             if '0' not in tmp and len(resp) == 11:
                 self.dev = tmp
                 scan = False
         conn.write(STOPSCAN.encode())
+
+    def configure(self, existing_cmd = None):
+        if existing_cmd:
+            existing_cmd += '\r\n'
+            self.conn.write(existing_cmd.encode())
+            return
+        numTag = int(input('Number of Tag: '))
+        numAnchor = int(input('Number of Anchor: '))
+        dev_str = 'Available Devices: '
+        for idx, dev in enumerate(self.dev):
+            dev_str += '[{0}]{1} '.format(idx, dev)
+        print(dev_str)
+        ids = [int(x) for x in input('Write the index to assign devices [ma,sa1..sax,tag]: ').strip().split(',')]
+        CONF = "$PK,{0},{1},{2},".format(self.dev[ids[0]], numAnchor-1, numTag)
+        for id in ids[1:]:
+            CONF = CONF + "{0},".format(self.dev[id])
+        with open('anchor_coordinate.txt', 'a') as f:
+            f.write(CONF)
+        CONF = CONF + '\r\n'
+        self.conn.write(CONF.encode())
 
     def reset_input(self, t):
         time.sleep(t)
@@ -68,12 +86,9 @@ class System:
         initial = True
         with open('mc_param.txt', 'r') as f:
             lines = f.readlines()
-
-        for line in lines:
-            if 'm' in line:
-                m=float(line[4:])
-            if 'c' in line:
-                c=float(line[4:])
+            m=float(lines[0][4:])
+            c=float(lines[1][4:])
+            # print("m={0},c={1}".format(m,c))
 
         err = lambda x:m*x+c
         conn.write(STARTRANGE.encode())
@@ -85,7 +100,7 @@ class System:
                 tmp = resp[2:6] if self.dim == 3 else resp[2:5]
                 if len(resp)==8 and '0' not in tmp:
                     distance = [err(int(x, 16)) for x in tmp]
-                    pose = trilateration(self.anchors, distance)
+                    pose = trilateration(self.anchors, distance, self.dim)
                     if initial:
                         kf.x = pose
                     self.zs.append(pose)
@@ -101,7 +116,11 @@ class System:
                     # Sends data to client
                     try:
                         msg = pickle.dumps(kf.x)
-                        client.send(msg)
+                        if len(clients) > 1:
+                            for client in clients:
+                                client.send(msg)
+                        else:
+                            clients[0].send(msg)
                     except:
                         pass
                     initial = False
@@ -110,17 +129,6 @@ class System:
         except KeyboardInterrupt:
             conn.write(STOPRANGE.encode())
             self.save_results()
-
-    def configure(self):
-        numTag = int(input('Number of Tag: '))
-        numAnchor = int(input('Number of Anchor: '))
-        print('Available Devices: ' + ', '.join(self.dev))
-        ids = [int(x) for x in input('MA,SA1..SAx,TAG: ').strip().split('')]
-        CONF = "$PK,{0},{1},{2},".format(self.dev[ids[0]], numAnchor-1, numTag)
-        for id in ids[1:]:
-            CONF = CONF + "{0},".format(self.dev[id])
-        CONF = CONF + '\r\n'
-        self.conn.write(CONF.encode())
 
     def save_results(self):
         file = self.file
@@ -133,33 +141,62 @@ class System:
         file.write(f"Std kalman={std_kf}\n")
         file.write(f"Std raw={std_raw}\n")
         idx = ['x','y','z']
-        for i in range(3):
+        for i in range(self.dim):
             plt.figure(i)
             plt.plot(zs[:,i], 'b.')
             plt.plot(xs[:,i], 'r--')
             plt.title(idx[i])
-            plt.savefig('position.png')
+            plt.savefig('{0}/{1}.png'.format(self.now, idx[i]))
         file.close()
 
 def checking_client():
-    global client
+    global clients
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(('192.168.1.49', 9000))
+    s.bind(('192.168.1.50', 9000))
     s.listen(10)
+    clients = []
     while 1:
         client, address = s.accept()
+        clients.append(client)
         print(f"Connection from {address} has been established.")
 
-def main():
-    dim = int(input('Dimension # 3 for 3D and 2 for 2D: '))
+def ask_anch_coords(dim):
+    file_tmp = open('anchor_coordinate.txt', 'w')
     anchors = []
+    str_to_ask = 'Coordinate {0} # values separated by comma -> x,y: ' if dim == 2 else 'Coordinate {0} # values separated by comma -> x,y,z: '
     for i in range(dim+1):
-        tmp = [float(x) for x in input('Coordinate {0} # values separated by comma -> x,y,z: '.format(i+1)).strip().split(',')]
-        anchors.append(tmp)
+        if dim == 2:
+            resp = input(str_to_ask.format(i+1)).strip()
+            anchor = [float(x) for x in resp.split(',')]
+        else:
+            resp = input(str_to_ask.format(i+1)).strip()
+            anchor = [float(x) for x in resp.split(',')]
+        file_tmp.write(resp + '\n')
+        anchors.append(anchor)
+    return anchors
 
+def main():
+    os.chdir(os.path.dirname(__file__)) 
+    dim = int(input('Dimension [2,3]: '))
+    anchors = []
+    existing_cmd = ''
+    if os.path.exists('anchor_coordinate.txt'):
+        resp_usr = input("Configuration already existed. Proceed with existing configuration or reset [p,r]:")
+        if resp_usr == 'r':
+            os.remove('anchor_coordinate.txt')
+        else:
+            with open('anchor_coordinate.txt', 'r') as f:
+                lines = f.readlines()
+            existing_cmd = lines[-1]
+            for line in lines[:-1]:
+                anchor = [float(x) for x in line.split(',')]
+                anchors.append(anchor)
+    if not os.path.exists('anchor_coordinate.txt'):
+        anchors = ask_anch_coords(dim)
+    
     kf = KalmanFilter(dim=dim)
     kf.R *= 100.
-    kf.Q = np.diag([1.5, 1.5, 0.05]) if dim == 3 else np.diag([1.5, 1.5])
+    kf.Q = np.diag([1., 1., 1.]) if dim == 3 else np.diag([1.5, 1.5])
     kf.P *= 50.    
 
     t1 = Thread(target=checking_client)
@@ -167,9 +204,13 @@ def main():
     t1.start()
 
     uwb = System(dim, kf, anchors)
+    print("Resetting...")
     uwb.reset()
+    print("Scanning...")
     uwb.scan()
-    uwb.configure()
+    print("Configuring...")
+    uwb.configure(existing_cmd)
+    print("Ranging...")
     uwb.ranging()
 
 if __name__ == "__main__":

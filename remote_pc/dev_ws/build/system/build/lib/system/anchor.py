@@ -1,3 +1,4 @@
+import os
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Point
@@ -21,16 +22,16 @@ class visualize(Node):
         self.anchor.type = Marker.CUBE_LIST
         self.anchor.action = Marker.ADD
         height = 10.
-        self.anchor.scale.x = 20.
-        self.anchor.scale.y = 20.
+        self.anchor.scale.x = 5.
+        self.anchor.scale.y = 5.
         self.anchor.scale.z = height
         self.anchor.color.r = 1.
         self.anchor.color.a = 1.
 
         with open(f'{home}/dev_ws/src/system/system/anchor_coordinate.txt', 'r') as f:
-            data = f.readlines()
-        for i in data:
-            point = [float(x) for x in i.strip().split(',')]
+            lines = f.readlines()
+        for line in lines[:-1]:
+            point = [float(x) for x in line.strip().split(',')]
             A = Point()
             A.x = point[0]
             A.y = point[1]
@@ -51,6 +52,7 @@ class visualize(Node):
         self.pub.publish(self.anchor)
         
 def main():
+    os.chdir(os.path.dirname(__file__)) 
     rclpy.init()
     visualiser = visualize()
     try:

@@ -59,12 +59,10 @@ class visualize(Node):
         self.sphere_list.scale.x = 5.
         self.sphere_list.scale.y = 5.
         self.sphere_list.scale.z = 5.
-
         self.sphere_list.color.b = 1.0
         self.sphere_list.color.a = 1.0
 
         self.line_strip.scale.x = 5.
-
         self.line_strip.color.r = 1.0
         self.line_strip.color.a = 1.0
         

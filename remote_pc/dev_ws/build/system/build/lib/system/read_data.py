@@ -30,7 +30,7 @@ def main():
     publisher = PublishData()
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect(('192.168.1.49', 9000))
+    s.connect(('192.168.1.50', 9000))
     try:
         while rclpy.ok():
             msg = s.recv(2048)

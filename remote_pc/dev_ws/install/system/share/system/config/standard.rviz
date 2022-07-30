@@ -9,6 +9,7 @@ Panels:
         - /Grid1
         - /Grid1/Offset1
         - /Marker1
+        - /Marker2
       Splitter Ratio: 0.5
     Tree Height: 407
   - Class: rviz_common/Selection
@@ -54,7 +55,7 @@ Visualization Manager:
       Enabled: true
       Name: Marker
       Namespaces:
-        anchors: true
+        {}
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -62,6 +63,19 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /anchor_marker
+      Value: true
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Marker
+      Namespaces:
+        lines: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /visualization_marker
       Value: true
   Enabled: true
   Global Options:

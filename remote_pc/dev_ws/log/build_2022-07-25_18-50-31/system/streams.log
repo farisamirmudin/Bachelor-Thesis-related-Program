@@ -1,0 +1,33 @@
+[1.225s] Invoking command in '/media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/build/system': PYTHONPATH=/media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system --uninstall --editable --build-directory /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/build/system/build
+[1.601s] running develop
+[1.816s] Invoked command in '/media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/build/system' returned '0': PYTHONPATH=/media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --prefix /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system --uninstall --editable --build-directory /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/build/system/build
+[1.818s] Invoking command in '/media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/src/system': PYTHONPATH=/media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/system build --build-base /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/build/system/build install --prefix /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system --record /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/build/system/install.log --single-version-externally-managed
+[2.235s] running egg_info
+[2.237s] writing ../../build/system/system.egg-info/PKG-INFO
+[2.239s] writing dependency_links to ../../build/system/system.egg-info/dependency_links.txt
+[2.242s] writing entry points to ../../build/system/system.egg-info/entry_points.txt
+[2.244s] writing requirements to ../../build/system/system.egg-info/requires.txt
+[2.245s] writing top-level names to ../../build/system/system.egg-info/top_level.txt
+[2.314s] reading manifest file '../../build/system/system.egg-info/SOURCES.txt'
+[2.317s] writing manifest file '../../build/system/system.egg-info/SOURCES.txt'
+[2.318s] running build
+[2.318s] running build_py
+[2.320s] copying system/anchor.py -> /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/build/system/build/lib/system
+[2.324s] copying system/visualize.py -> /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/build/system/build/lib/system
+[2.327s] running install
+[2.328s] running install_lib
+[2.331s] copying /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/build/system/build/lib/system/anchor.py -> /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system/lib/python3.8/site-packages/system
+[2.334s] copying /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/build/system/build/lib/system/visualize.py -> /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system/lib/python3.8/site-packages/system
+[2.338s] byte-compiling /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system/lib/python3.8/site-packages/system/anchor.py to anchor.cpython-38.pyc
+[2.343s] byte-compiling /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system/lib/python3.8/site-packages/system/visualize.py to visualize.cpython-38.pyc
+[2.345s] running install_data
+[2.347s] running install_egg_info
+[2.349s] removing '/media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system/lib/python3.8/site-packages/system-0.1.0-py3.8.egg-info' (and everything under it)
+[2.352s] Copying ../../build/system/system.egg-info to /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system/lib/python3.8/site-packages/system-0.1.0-py3.8.egg-info
+[2.370s] running install_scripts
+[2.402s] Installing anchor script to /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system/lib/system
+[2.404s] Installing read_data script to /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system/lib/system
+[2.406s] Installing static_tf script to /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system/lib/system
+[2.408s] Installing visualize script to /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system/lib/system
+[2.411s] writing list of installed files to '/media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/build/system/install.log'
+[2.440s] Invoked command in '/media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/src/system' returned '0': PYTHONPATH=/media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/system build --build-base /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/build/system/build install --prefix /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/install/system --record /media/psf/Home/Documents/Ultra-Wideband-Localization-Project/remote_pc/dev_ws/build/system/install.log --single-version-externally-managed

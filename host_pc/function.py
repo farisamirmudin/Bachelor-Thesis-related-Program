@@ -70,19 +70,18 @@ def solve(point, distance):
 
     return np.array([pos.x, pos.y])
 
-def trilateration(points, distances):
+def trilateration(points, distances, dim):
     with open('abc_param.txt', 'r') as f:
         lines = f.readlines()
-
-    for line in lines:
-        if 'a' in line:
-            a=float(line[4:])
-        if 'b' in line:
-            b=float(line[4:])
-        if 'c' in line:
-            c=float(line[4:])
-    p1,p2,p3,p4 = np.array(points)
-    r1,r2,r3,r4 = np.array(distances)
+        a=float(lines[0][4:])
+        b=float(lines[1][4:])
+        c=float(lines[2][4:])
+    if dim == 3:
+        p1,p2,p3,p4 = np.array(points)
+        r1,r2,r3,r4 = np.array(distances)
+    else:
+        p1,p2,p3 = np.array(points)
+        r1,r2,r3 = np.array(distances)
     e_x=(p2-p1)/np.linalg.norm(p2-p1)
     i=np.dot(e_x,(p3-p1))
     e_y=(p3-p1-(i*e_x))/(np.linalg.norm(p3-p1-(i*e_x)))
@@ -91,6 +90,9 @@ def trilateration(points, distances):
     j=np.dot(e_y,(p3-p1))
     x=((r1**2)-(r2**2)+(d**2))/(2*d)
     y=(((r1**2)-(r3**2)+(i**2)+(j**2))/(2*j))-((i/j)*(x))
+    if dim == 2:
+        ans1=p1+(x*e_x)+(y*e_y)
+        return ans1
     z1=np.sqrt(max(0, r1**2-x**2-y**2))
     z2=-z1
     ans1=p1+(x*e_x)+(y*e_y)+(z1*e_z)
