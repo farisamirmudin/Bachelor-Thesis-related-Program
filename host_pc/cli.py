@@ -116,13 +116,8 @@ class System:
                     # Sends data to client
                     if clients:
                         msg = pickle.dumps(kf.x)
-                        # if len(clients) > 1:
                         for client in clients:
                             client.send(msg)
-                        # else:
-                        #     clients[0].send(msg)
-                    # except:
-                    #     pass
                     initial = False
                     self.reset_input(0.05)
 
