@@ -35,6 +35,10 @@ def main():
         while rclpy.ok():
             msg = s.recv(2048)
             data = pickle.loads(msg)
+            if isinstance(data[0], list):
+                with open('anchor_coordinate', 'w+') as f:
+                    for row in data:
+                        f.write(','.join(list(map(str, row))) + '\n')
             publisher.pub_tag(data)
     except KeyboardInterrupt:
         pass

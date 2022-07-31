@@ -55,10 +55,10 @@ class System:
                 scan = False
         conn.write(STOPSCAN.encode())
 
-    def configure(self, existing_cmd = None):
-        if existing_cmd:
-            existing_cmd += '\r\n'
-            self.conn.write(existing_cmd.encode())
+    def configure(self, existing_conf = None):
+        if existing_conf:
+            existing_conf += '\r\n'
+            self.conn.write(existing_conf.encode())
             return
         numTag = int(input('Number of Tag: '))
         numAnchor = int(input('Number of Anchor: '))
@@ -114,15 +114,15 @@ class System:
                     file.write(f"position = {kf.x}\n")
 
                     # Sends data to client
-                    try:
+                    if clients:
                         msg = pickle.dumps(kf.x)
-                        if len(clients) > 1:
-                            for client in clients:
-                                client.send(msg)
-                        else:
-                            clients[0].send(msg)
-                    except:
-                        pass
+                        # if len(clients) > 1:
+                        for client in clients:
+                            client.send(msg)
+                        # else:
+                        #     clients[0].send(msg)
+                    # except:
+                    #     pass
                     initial = False
                     self.reset_input(0.05)
 
@@ -149,18 +149,23 @@ class System:
             plt.savefig('{0}/{1}.png'.format(self.now, idx[i]))
         file.close()
 
-def checking_client():
+def checking_client(anchors):
     global clients
+    msg = pickle.dumps(anchors)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind(('192.168.1.50', 9000))
     s.listen(10)
-    clients = []
+    clients = {}
     while 1:
         client, address = s.accept()
-        clients.append(client)
+        clients[client] = 0
         print(f"Connection from {address} has been established.")
+        for client in clients:
+            if clients[client] == 0:
+                client.send(msg)
+                clients[client] = 1
 
-def ask_anch_coords(dim):
+def ask_anch_coordinate(dim):
     file_tmp = open('anchor_coordinate.txt', 'w')
     anchors = []
     str_to_ask = 'Coordinate {0} # values separated by comma -> x,y: ' if dim == 2 else 'Coordinate {0} # values separated by comma -> x,y,z: '
@@ -175,13 +180,13 @@ def ask_anch_coords(dim):
         anchors.append(anchor)
     return anchors
 
-def main():
+if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__)) 
-    dim = int(input('Dimension [2,3]: '))
+    dim = int(input('Dimension [2,3]? '))
     anchors = []
     existing_cmd = ''
     if os.path.exists('anchor_coordinate.txt'):
-        resp_usr = input("Configuration already existed. Proceed with existing configuration or reset [p,r]:")
+        resp_usr = input("Configuration already existed. Proceed with existing configuration or reset [p,r]? ")
         if resp_usr == 'r':
             os.remove('anchor_coordinate.txt')
         else:
@@ -192,7 +197,7 @@ def main():
                 anchor = [float(x) for x in line.split(',')]
                 anchors.append(anchor)
     if not os.path.exists('anchor_coordinate.txt'):
-        anchors = ask_anch_coords(dim)
+        anchors = ask_anch_coordinate(dim)
     
     kf = KalmanFilter(dim=dim)
     kf.R *= 100.
@@ -212,6 +217,3 @@ def main():
     uwb.configure(existing_cmd)
     print("Ranging...")
     uwb.ranging()
-
-if __name__ == "__main__":
-    main()

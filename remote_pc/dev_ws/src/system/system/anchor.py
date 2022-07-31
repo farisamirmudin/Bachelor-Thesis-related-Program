@@ -3,8 +3,6 @@ import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Point
 from visualization_msgs.msg import Marker
-from pathlib import Path
-home = str(Path.home())
 
 class visualize(Node):
     def __init__(self):
@@ -27,19 +25,19 @@ class visualize(Node):
         self.anchor.scale.z = height
         self.anchor.color.r = 1.
         self.anchor.color.a = 1.
-
-        with open(f'{home}/dev_ws/src/system/system/anchor_coordinate.txt', 'r') as f:
+        os.chdir(os.path.dirname(__file__)) 
+        with open('anchor_coordinate.txt', 'r') as f:
             lines = f.readlines()
-        for line in lines[:-1]:
-            point = [float(x) for x in line.strip().split(',')]
-            A = Point()
-            A.x = point[0]
-            A.y = point[1]
-            if len(point) == 2:
-                A.z = height/2
-            else:
-                A.z = point[2]+height/2
-            self.anchor.points.append(A)
+            for line in lines:
+                point = [float(x) for x in line.strip().split(',')]
+                A = Point()
+                A.x = point[0]
+                A.y = point[1]
+                if len(point) == 2:
+                    A.z = height/2
+                else:
+                    A.z = point[2]+height/2
+                self.anchor.points.append(A)
 
         # dim = int(input('Dimension # 3 for 3D and 2 for 2D: '))
         # points = []

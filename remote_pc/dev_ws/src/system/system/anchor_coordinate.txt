@@ -1,1 +1,0 @@
-/media/psf/Home/Documents/Ultra-Wideband-Localization-Project/host_pc/anchor_coordinate.txt
