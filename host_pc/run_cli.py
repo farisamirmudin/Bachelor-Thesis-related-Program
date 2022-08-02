@@ -1,8 +1,8 @@
 import os, time, socket, pickle
 from serial import Serial
 import numpy as np
-from function import *
-from kalmanfilter import *
+from trilateration import *
+from kalman import *
 from threading import Thread
 import matplotlib.pyplot as plt
 from datetime import datetime
@@ -84,7 +84,7 @@ class System:
         file = self.file
         conn = self.conn
         initial = True
-        with open('mc_param.txt', 'r') as f:
+        with open('parameters/mc_param.txt', 'r') as f:
             lines = f.readlines()
             m=float(lines[0][4:])
             c=float(lines[1][4:])
@@ -175,7 +175,7 @@ def ask_anch_coordinate(dim):
         anchors.append(anchor)
     return anchors
 
-if __name__ == "__main__":
+def main():
     os.chdir(os.path.dirname(__file__)) 
     dim = int(input('Dimension [2,3]? '))
     anchors = []
@@ -212,3 +212,6 @@ if __name__ == "__main__":
     uwb.configure(existing_cmd)
     print("Ranging...")
     uwb.ranging()
+
+if __name__ == "__main__":
+    main()
