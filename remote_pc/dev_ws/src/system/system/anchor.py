@@ -26,18 +26,21 @@ class visualize(Node):
         self.anchor.color.r = 1.
         self.anchor.color.a = 1.
         os.chdir(os.path.dirname(__file__)) 
-        with open('anchor_coordinate.txt', 'r') as f:
-            lines = f.readlines()
-            for line in lines:
-                point = [float(x) for x in line.strip().split(',')]
-                A = Point()
-                A.x = point[0]
-                A.y = point[1]
-                if len(point) == 2:
-                    A.z = height/2
-                else:
-                    A.z = point[2]+height/2
-                self.anchor.points.append(A)
+        try:
+            with open('anchor_coordinate.txt', 'r') as f:
+                lines = f.readlines()
+                for line in lines:
+                    point = [float(x) for x in line.strip().split(',')]
+                    A = Point()
+                    A.x = point[0]
+                    A.y = point[1]
+                    if len(point) == 2:
+                        A.z = height/2
+                    else:
+                        A.z = point[2]+height/2
+                    self.anchor.points.append(A)
+        except:
+            pass
 
         # dim = int(input('Dimension # 3 for 3D and 2 for 2D: '))
         # points = []
