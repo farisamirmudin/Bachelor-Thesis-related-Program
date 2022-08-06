@@ -1,4 +1,5 @@
-# Bachelor Thesis related Program
+# About
+This is the written python program used in my bachelor thesis.
 - Host PC
     - Socket Server-Client connection
     - Command Line Interface (CLI)
